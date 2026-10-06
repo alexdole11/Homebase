@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HomeBase — Money made simple</title>
+<style>
+:root{--bg:#f5f7f8;--card:#fff;--text:#172026;--muted:#68747d;--line:#e5e9ec;--accent:#285943;--accent2:#eaf3ed;--danger:#a53b3b}
+*{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.app{max-width:1080px;margin:auto;padding:28px 20px 50px}
+header{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px}
+.logo{font-size:24px;font-weight:800;letter-spacing:-.6px}.logo span{color:var(--accent)}
+button{border:0;border-radius:12px;padding:11px 15px;font-weight:700;cursor:pointer;background:var(--accent);color:white}
+.grid{display:grid;grid-template-columns:1.25fr .75fr;gap:18px}.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px;box-shadow:0 3px 14px #16212a08}
+.hero{grid-column:1/-1;background:linear-gradient(135deg,#fff,#eef5f0);padding:28px}.eyebrow{color:var(--muted);font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.08em}
+.big{font-size:48px;font-weight:800;letter-spacing:-2px;margin:4px 0}.positive{color:var(--accent)}.muted{color:var(--muted)}
+.row{display:flex;justify-content:space-between;gap:12px;padding:13px 0;border-bottom:1px solid var(--line)}.row:last-child{border:0}
+h2{font-size:18px;margin:0 0 12px}.progress{height:9px;background:#e9edef;border-radius:99px;overflow:hidden}.bar{height:100%;background:var(--accent);border-radius:99px}
+.quick{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}.quick button{background:white;color:var(--text);border:1px solid var(--line)}
+input{width:100%;padding:13px;border:1px solid var(--line);border-radius:12px;font-size:16px;margin:8px 0}
+.result{margin-top:10px;padding:14px;border-radius:14px;background:var(--accent2);display:none}
+@media(max-width:760px){.grid{grid-template-columns:1fr}.quick{grid-template-columns:1fr}.big{font-size:40px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header><div class="logo">Home<span>Base</span></div><button onclick="alert('MVP: account settings coming next')">Settings</button></header>
+
+<div class="grid">
+<section class="card hero">
+<div class="eyebrow">Safe to spend</div>
+<div class="big positive">$240</div>
+<div class="muted">Your flexible spending target for this week.</div>
+<div class="quick">
+<button onclick="ask('Can I afford a $300 purchase?')">Can I afford something?</button>
+<button onclick="ask('How long until I reach my savings goal?')">Check a goal</button>
+<button onclick="ask('What bills are coming up?')">Upcoming bills</button>
+</div>
+</section>
+
+<section class="card">
+<h2>Money snapshot</h2>
+<div class="row"><span>Checking</span><strong>$2,640</strong></div>
+<div class="row"><span>Savings</span><strong>$3,200</strong></div>
+<div class="row"><span>Bills coming</span><strong>$1,460</strong></div>
+<div class="row"><span>Emergency fund</span><strong>$3,200</strong></div>
+</section>
+
+<section class="card">
+<h2>This week</h2>
+<div class="row"><span>Groceries</span><strong>$120</strong></div>
+<div class="row"><span>Gas</span><strong>$60</strong></div>
+<div class="row"><span>Other</span><strong>$60</strong></div>
+<div class="row"><span>Left to spend</span><strong class="positive">$240</strong></div>
+</section>
+
+<section class="card">
+<h2>Goals</h2>
+<div class="row"><span>Emergency fund</span><strong>64%</strong></div><div class="progress"><div class="bar" style="width:64%"></div></div>
+<div style="height:15px"></div>
+<div class="row"><span>New truck</span><strong>18%</strong></div><div class="progress"><div class="bar" style="width:18%"></div></div>
+<div style="height:15px"></div>
+<div class="row"><span>Fence project</span><strong>42%</strong></div><div class="progress"><div class="bar" style="width:42%"></div></div>
+</section>
+
+<section class="card">
+<h2>Home projects</h2>
+<div class="row"><span>Fence</span><strong>$5,000</strong></div>
+<div class="row"><span>Deck</span><strong>$8,500</strong></div>
+<div class="row"><span>Bathroom</span><strong>$4,200</strong></div>
+<button style="margin-top:8px" onclick="alert('Project planner is next in the MVP')">+ Add project</button>
+</section>
+
+<section class="card" style="grid-column:1/-1">
+<h2>Can I afford it?</h2>
+<div class="muted">A simple answer based on your current plan.</div>
+<input id="purchase" type="number" placeholder="Enter purchase amount">
+<button onclick="checkAfford()">Check</button>
+<div id="result" class="result"></div>
+</section>
+</div>
+</div>
+<script>
+function checkAfford(){
+ const n=Number(document.getElementById('purchase').value), r=document.getElementById('result');
+ if(!n){r.style.display='none';return}
+ r.style.display='block';
+ if(n<=240) r.innerHTML='<strong>Yes — comfortably.</strong><br>You are within this week’s planned flexible spending.';
+ else if(n<=325) r.innerHTML='<strong>Maybe — but watch your buffer.</strong><br>This would put you above the current weekly target.';
+ else r.innerHTML='<strong>I’d wait.</strong><br>This purchase would put a meaningful dent in your current spending buffer.';
+}
+function ask(x){document.getElementById('purchase').focus()}
+</script>
+</body>
+</html>
